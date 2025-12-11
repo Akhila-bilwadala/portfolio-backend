@@ -32,5 +32,5 @@ const ProjectSchema = new mongoose.Schema(
   }
 );
 
-// ✅ YOU FORGOT THIS PART
+
 module.exports = mongoose.model("Project", ProjectSchema);
