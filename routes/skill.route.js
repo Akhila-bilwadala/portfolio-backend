@@ -9,11 +9,13 @@ const {
 
 const router = express.Router();
 
+const { protect } = require('../middleware/auth.middleware');
+
 // Routes
 router.get("/", getSkills);
 router.get("/:id", getSkill);
-router.post("/", createSkill);
-router.put("/:id", updateSkill);
-router.delete("/:id", deleteSkill);
+router.post("/", protect, createSkill);
+router.put("/:id", protect, updateSkill);
+router.delete("/:id", protect, deleteSkill);
 
 module.exports = router;

@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/projects', projectRoute);
 app.use('/api/skills', skillRoute);
 app.use('/api/messages', messageRoute);
+app.use('/api/auth', require('./routes/auth.route.js'));
 
 // home route
 app.get('/', (req, res) => {
@@ -24,9 +25,12 @@ app.get('/', (req, res) => {
 });
 
 // MongoDB connect + start server
+const { seedAdmin } = require('./controllers/auth.controller.js');
+
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log("connected to the database!");
+    await seedAdmin();
 
     app.listen(process.env.PORT || 3000, () => {
       console.log('server is running on port ' + (process.env.PORT || 3000));
