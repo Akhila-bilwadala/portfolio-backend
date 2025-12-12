@@ -33,8 +33,13 @@ const loginUser = async (req, res) => {
 // Seed Admin User (Internal use)
 const seedAdmin = async () => {
     try {
-        const adminUsername = "akhila";
-        const adminPassword = "060526"; // In real app, use env var
+        const adminUsername = process.env.ADMIN_USERNAME;
+        const adminPassword = process.env.ADMIN_PASSWORD;
+
+        if (!adminUsername || !adminPassword) {
+            console.log("Admin credentials missing in .env");
+            return;
+        }
 
         const userExists = await User.findOne({ username: adminUsername });
 
@@ -52,6 +57,7 @@ const seedAdmin = async () => {
         console.error("Error seeding admin:", error);
     }
 };
+
 
 module.exports = {
     loginUser,
