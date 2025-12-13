@@ -17,6 +17,16 @@ const ProjectSchema = new mongoose.Schema(
     github: {
       type: String,
       required: false,
+      validate: {
+        validator: function (v) {
+          // Allow empty string or null
+          if (!v) return true;
+          // Validate GitHub URL format
+          return /^(https?:\/\/)?(www\.)?github\.com\/[\w-]+\/[\w.-]+\/?.*$/i.test(v);
+        },
+        message: 'Please provide a valid GitHub URL (e.g., https://github.com/username/repo)'
+      },
+      trim: true
     },
     demo: {
       type: String,

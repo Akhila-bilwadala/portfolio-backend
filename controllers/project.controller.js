@@ -23,6 +23,18 @@ const getProjectById = async (req, res) => {
 // CREATE project
 const createProject = async (req, res) => {
   try {
+    const { github } = req.body;
+
+    // Validate GitHub URL if provided
+    if (github && github.trim()) {
+      const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[\w-]+\/[\w.-]+\/?.*$/i;
+      if (!githubRegex.test(github.trim())) {
+        return res.status(400).json({
+          message: "Please provide a valid GitHub URL (e.g., https://github.com/username/repo)"
+        });
+      }
+    }
+
     const project = await Project.create(req.body);
     res.status(200).json(project);
   } catch (error) {
@@ -33,6 +45,18 @@ const createProject = async (req, res) => {
 // UPDATE project
 const updateProject = async (req, res) => {
   try {
+    const { github } = req.body;
+
+    // Validate GitHub URL if provided
+    if (github && github.trim()) {
+      const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[\w-]+\/[\w.-]+\/?.*$/i;
+      if (!githubRegex.test(github.trim())) {
+        return res.status(400).json({
+          message: "Please provide a valid GitHub URL (e.g., https://github.com/username/repo)"
+        });
+      }
+    }
+
     const project = await Project.findByIdAndUpdate(req.params.id, req.body);
     if (!project) return res.status(404).json({ message: "Project not found" });
 

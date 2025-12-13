@@ -24,9 +24,30 @@ const getSkill = async (req, res) => {
 // Create skill
 const createSkill = async (req, res) => {
   try {
-    const skill = await Skill.create(req.body);
+    const skillName = req.body.skill?.trim();
+
+    if (!skillName) {
+      return res.status(400).json({ message: "Skill name is required" });
+    }
+
+    // Check for duplicate (case-insensitive)
+    const existingSkill = await Skill.findOne({
+      skill: { $regex: new RegExp(`^${skillName}$`, 'i') }
+    });
+
+    if (existingSkill) {
+      return res.status(400).json({
+        message: "This skill already exists"
+      });
+    }
+
+    const skill = await Skill.create({ skill: skillName });
     res.status(200).json(skill);
   } catch (error) {
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "This skill already exists" });
+    }
     res.status(500).json({ message: error.message });
   }
 };

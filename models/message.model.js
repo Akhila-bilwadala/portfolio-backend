@@ -9,6 +9,12 @@ const MessageSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
+            match: [
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                'Please enter a valid email address'
+            ],
+            lowercase: true,
+            trim: true
         },
         message: {
             type: String,

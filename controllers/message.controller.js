@@ -3,7 +3,23 @@ const Message = require('../models/message.model');
 // Create a new message
 const createMessage = async (req, res) => {
     try {
-        const newMessage = await Message.create(req.body);
+        const { name, email, message } = req.body;
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            return res.status(400).json({
+                message: "Please provide a valid email address"
+            });
+        }
+
+        // Create message with sanitized data
+        const newMessage = await Message.create({
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
+            message: message.trim()
+        });
+
         res.status(200).json(newMessage);
     } catch (error) {
         res.status(500).json({ message: error.message });
