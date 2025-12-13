@@ -2,6 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Security: Validate critical environment variables at startup
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined in .env file.');
+  console.error('Please add a strong JWT_SECRET to your .env file before starting the server.');
+  process.exit(1);
+}
+
 const projectRoute = require('./routes/project.route.js');
 const skillRoute = require('./routes/skill.route.js');
 const messageRoute = require('./routes/message.route.js');
