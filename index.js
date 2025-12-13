@@ -24,6 +24,9 @@ const allowedOrigins = [
   'http://127.0.0.1:5501',
   process.env.FRONTEND_URL,
   'https://akhila-bilwadala.vercel.app',
+  'https://www.akhila-bilwadala.vercel.app',
+  'http://akhila-bilwadala.vercel.app',
+  'http://www.akhila-bilwadala.vercel.app',
   // 'https://your-portfolio-domain.com'
 ].filter(Boolean); // Remove undefined values
 
