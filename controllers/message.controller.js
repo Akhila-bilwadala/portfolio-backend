@@ -5,11 +5,11 @@ const createMessage = async (req, res) => {
     try {
         const { name, email, message } = req.body;
 
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Validate email format (Gmail only)
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
         if (!email || !emailRegex.test(email)) {
             return res.status(400).json({
-                message: "Please provide a valid email address"
+                message: "Please provide a valid Gmail address"
             });
         }
 
