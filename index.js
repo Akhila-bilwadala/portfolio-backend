@@ -34,6 +34,14 @@ mongoose.connect(process.env.MONGO_URI)
 
     app.listen(process.env.PORT || 3000, () => {
       console.log('server is running on port ' + (process.env.PORT || 3000));
+
+      const url = process.env.RENDER_EXTERNAL_URL;
+      if (url) {
+        // Render free services sleep after 15 mins of inactivity.
+        // This pings the server every 14 mins to keep it awake.
+        // RENDER_EXTERNAL_URL is set automatically by Render.
+        setInterval(() => require('https').get(url), 14 * 60 * 1000);
+      }
     });
   })
   .catch((error) => {
