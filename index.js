@@ -23,7 +23,7 @@ const allowedOrigins = [
   'http://127.0.0.1:5500',
   'http://127.0.0.1:5501',
   process.env.FRONTEND_URL,
-  // Add your deployed frontend URL here
+  'https://akhila-bilwadala.vercel.app',
   // 'https://your-portfolio-domain.com'
 ].filter(Boolean); // Remove undefined values
 
